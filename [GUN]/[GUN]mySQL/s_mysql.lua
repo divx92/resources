@@ -29,7 +29,6 @@
 			return false
 		end
 	end
-	--IPB:isUser(user)
 	
 	function IPB:getUserData(UID, data)
 		if IPB["connection"] then
@@ -38,7 +37,6 @@
 				if result then
 				for k,table in pairs (result) do
 					for k,v in pairs (table) do
-						outputChatBox (v)
 						return true, v
 					end
 				end
@@ -50,33 +48,5 @@
 			return false
 		end
 	end
-	-- IPB:getUserData(4, "email")
-	--[[
-	function mysql_playerConnect(user, pass)
-		login = "patr0"
-		password = "ecdca4dee412d925915919067abd369b"
-		if mySQL then
-			player = dbQuery( mySQL, "SELECT email FROM forum_members WHERE members_l_username = '"..login.."' AND members_pass_hash = '"..tostring(password).."' ")
-			
-			
-			local result, num_affected_rows, last_insert_id = dbPoll( player, -1 )
-			for k,v in pairs (result) do
-				for k,ID in pairs (v) do
-						outputChatBox (tostring(ID))
-						setElementData (user, "UID", ID)
-						return true, ID
-				end
-			end
-			if result == nil then
-				outputConsole( "dbPoll result not ready yet" )
-			elseif result == false then
-				local error_code,error_msg = num_affected_rows,last_insert_id
-				outputConsole( "dbPoll failed. Error code: " .. tostring(error_code) .. "  Error message: " .. tostring(error_msg) )
-			else
-				outputConsole( "dbPoll succeeded. Number of affected rows: " .. tostring(num_affected_rows) .. "  Last insert id: " .. tostring(last_insert_id) )
-			end
-			end
-		end
-		addCommandHandler ("user", mysql_playerConnect)
-		]]
+
 	
