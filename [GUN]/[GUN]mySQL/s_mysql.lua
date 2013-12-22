@@ -29,17 +29,28 @@
 			return false
 		end
 	end
-	IPB:isUser(user)
+	--IPB:isUser(user)
 	
 	function IPB:getUserData(UID, data)
 		if IPB["connection"] then
 				local data = dbQuery( IPB["connection"], "SELECT "..data.." FROM forum_members WHERE member_id = '"..UID.."'")	
 				local result, num_affected_rows, last_insert_id = dbPoll( data, -1 )
+				if result then
+				for k,table in pairs (result) do
+					for k,v in pairs (table) do
+						outputChatBox (v)
+						return true, v
+					end
+				end
+				else
+					return false
+				end
 		else
-		
+			outputDebugString ("mySQL connection or function data missing",1 )
+			return false
 		end
 	end
-	
+	-- IPB:getUserData(4, "email")
 	--[[
 	function mysql_playerConnect(user, pass)
 		login = "patr0"
