@@ -2,7 +2,7 @@
 	IPB = {}
 	
 	function mySQL_connect()
-			IPB[1] = dbConnect ( "mysql", "dbname=iroleplay.pl;host=185.25.148.85;port=3306" ,"mta", "patr0" )
+			IPB["connection"] = dbConnect ( "mysql", "dbname=iroleplay.pl;host=185.25.148.85;port=3306" ,"mta", "patr0" )
 			if mySQL then
 				outputDebugString ("mySQL connected", 3)
 				return true
@@ -12,18 +12,28 @@
 	mySQL_connect()
 
 	function IPB:isUser(user)
-		if IPB[1] then
-			local nick = getPlayerName (user) or "patr0"
-			local user = dbQuery( mySQL, "SELECT * FROM forum_members WHERE members_l_username = '"..nick)
-	
+		if IPB["connection"] then
+			local nick = "patr0" 
+			local user = dbQuery( IPB["connection"], "SELECT member_id FROM forum_members WHERE members_l_username = '"..nick.."'")	
+			local result, num_affected_rows, last_insert_id = dbPoll( user, -1 )
+			if result then
+				for k,table in pairs (result) do
+					for k,v in pairs (table) do
+						return true, v
+					end
+				end
+			else
+				return false
+			end
 		else
-		
+			outputDebugString ("mySQL connection missing")
+			return false
 		end
 	end
 	IPB:isUser(user)
 	
 	function IPB:getUserData(UID)
-		if IPB[1] then
+		if IPB["connection"] then
 			outputChatBox ("asd")
 		else
 		
