@@ -10,7 +10,7 @@
 		
 	end
 	mySQL_connect()
-
+	
 	function IPB:loginPlayer(login, pass)
 		if IPB["connection"] and login then
 			local user = dbQuery( IPB["connection"], "SELECT member_id FROM forum_members WHERE members_l_username = '"..login.."' AND members_pass_hash= MD5(CONCAT(MD5(members_pass_salt),'', MD5( '".. pass .. "' )))")	
@@ -63,5 +63,22 @@
 			return false
 		end
 	end
+	
+		function IPB:getPlayerAvatar(UID)
+			local files = {}
+			function file (responseData, errno, gravatar)
+				if errno == 0 then
+					outputChatBox ("coś znaleziono")
+					return true, responseData
+				elseif gravatar then
+				  return false
+				end
+			end
+		local bool, email = IPB:getUserData(UID, "email")
+		local email = md5 (email)	
+		local gravatar = fetchRemote ( "http://gravatar.com/avatar/"..email.."",  file, "", false, true)	
+		local file = fetchRemote ( "http://iroleplay.pl/uploads/profile/photo-"..UID..".jpg", file, "")
+	end
+	IPB:getPlayerAvatar(4)
 
 	
