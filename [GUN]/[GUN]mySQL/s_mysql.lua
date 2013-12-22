@@ -12,9 +12,8 @@
 	mySQL_connect()
 
 	function IPB:isUser(user)
-		if IPB["connection"] then
-			local nick = "patr0" 
-			local user = dbQuery( IPB["connection"], "SELECT member_id FROM forum_members WHERE members_l_username = '"..nick.."'")	
+		if IPB["connection"] and user then
+			local user = dbQuery( IPB["connection"], "SELECT member_id FROM forum_members WHERE members_l_username = '"..getPlayerName (user).."'")	
 			local result, num_affected_rows, last_insert_id = dbPoll( user, -1 )
 			if result then
 				for k,table in pairs (result) do
@@ -26,15 +25,16 @@
 				return false
 			end
 		else
-			outputDebugString ("mySQL connection missing")
+			outputDebugString ("mySQL connection or user data missing",1 )
 			return false
 		end
 	end
 	IPB:isUser(user)
 	
-	function IPB:getUserData(UID)
+	function IPB:getUserData(UID, data)
 		if IPB["connection"] then
-			outputChatBox ("asd")
+				local data = dbQuery( IPB["connection"], "SELECT "..data.." FROM forum_members WHERE member_id = '"..UID.."'")	
+				local result, num_affected_rows, last_insert_id = dbPoll( data, -1 )
 		else
 		
 		end
