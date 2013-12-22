@@ -1,18 +1,36 @@
+
+	IPB = {}
 	
-	function mysql_export()
-	
-	end
-	
-	function mysql_connect()
-		mySQL = dbConnect ( "mysql", "dbname=iroleplay.pl;host=185.25.148.85;port=3306" ,"mta", "patr0" )
+	function mySQL_connect()
+			IPB[1] = dbConnect ( "mysql", "dbname=iroleplay.pl;host=185.25.148.85;port=3306" ,"mta", "patr0" )
 			if mySQL then
 				outputDebugString ("mySQL connected", 3)
 				return true
 			else return false end
 		
 	end
-	addCommandHandler ("sql", mysql_connect)
+	mySQL_connect()
+
+	function IPB:isUser(user)
+		if IPB[1] then
+			local nick = getPlayerName (user) or "patr0"
+			local user = dbQuery( mySQL, "SELECT * FROM forum_members WHERE members_l_username = '"..nick)
 	
+		else
+		
+		end
+	end
+	IPB:isUser(user)
+	
+	function IPB:getUserData(UID)
+		if IPB[1] then
+			outputChatBox ("asd")
+		else
+		
+		end
+	end
+	
+	--[[
 	function mysql_playerConnect(user, pass)
 		login = "patr0"
 		password = "ecdca4dee412d925915919067abd369b"
@@ -39,4 +57,5 @@
 			end
 		end
 		addCommandHandler ("user", mysql_playerConnect)
+		]]
 	
