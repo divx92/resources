@@ -10,7 +10,19 @@
 
 	call (getResourceFromName ("[GUN]blur"), "sw_blur_remote", true)
 	
-	local function login_camAnim(bool)
+	local function LOGIN_receiveAvatar(data)
+		if isElement(login.avatar) then
+			destroyElement (login.avatar)
+			login.avatar = nil
+		else
+			outputChatBox ("AVATAR CLIENT :")
+			login.avatar = dxCreateTexture (data)
+		end
+	end
+	addEvent ("LOGIN:receiveAvatar", true)
+	addEventHandler ("LOGIN:receiveAvatar", root,  LOGIN_receiveAvatar)
+	
+	local function LOGIN_camAnim(bool)
 		if bool then
 			local table_pos = 1
 				function main_anim ()
@@ -33,7 +45,7 @@
 								outputChatBox (table_pos)
 								outputChatBox ("END")
 							else
-								login_camAnim (false)
+								LOGIN_camAnim (false)
 							end
 						end
 				end
@@ -47,7 +59,7 @@
 				removeEventHandler ("onClientRender", root, main_anim)
 			end
 	end
-	login_camAnim(true)
+	LOGIN_camAnim(true)
 	
 	local x,y = guiGetScreenSize()
 	local login = {
@@ -63,7 +75,8 @@
 					},
 				texts = {
 
-				}
+				},
+				avatar = {}
 	}
 	
 	function dx_drawLoginWindow()
@@ -72,6 +85,9 @@
 		end
 		for k,v in pairs (login.texts) do
 			dxDrawText (unpack(v))
+		end
+		if isElement(login.avatar) then
+			dxDrawImage (x/2-32, y/2-128, 64, 64, login.avatars)
 		end
 	end
 	addEventHandler ("onClientRender", root, dx_drawLoginWindow)
