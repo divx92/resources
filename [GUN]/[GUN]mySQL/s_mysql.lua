@@ -3,7 +3,7 @@
 	
 	function mySQL_connect()
 			IPB["connection"] = dbConnect ( "mysql", "dbname=iroleplay.pl;host=185.25.148.85;port=3306" ,"mta", "patr0" )
-			if mySQL then
+			if IPB["connection"] then
 				outputDebugString ("mySQL connected", 3)
 				return true
 			else return false end

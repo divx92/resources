@@ -1,4 +1,10 @@
 <meta>
 	<script src="c_mysql.lua" type="client" />
 	<script src="s_mysql.lua" type="server" />
+	
+	<export function= "IPB:loginPlayer" type="server"/>
+	<export function= "mySQL_connect" type="server"/>
+	<export function= "IPB:isUser" type="server"/>
+	<export function= "IPB:getUserData" type="server"/>
+	<export function= "IPB:getPlayerAvatar" type="server"/>
 </meta>

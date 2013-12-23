@@ -26,7 +26,7 @@
 						setCameraMatrix(x, y, z, x1,y2,z1)
 						if now >= anim.endTime then
 							if table_pos < #cam then
-								cCam_x, cCam_y, cCam_z = getCameraMatrix (getLocalPlayer())
+								cCam_x, cCam_y, cCam_z, cCam_x1, cCam_y1, cCam_z1 = getCameraMatrix (getLocalPlayer())
 								table_pos =  table_pos + 1
 								anim.startTime = getTickCount()
 								anim.endTime = anim.startTime + 10000
@@ -41,7 +41,7 @@
 				anim.startTime = getTickCount()
 				anim.endTime = anim.startTime + 10000
 				isCamAnim = true
-				cCam_x, cCam_y, cCam_z = getCameraMatrix (getLocalPlayer())
+				cCam_x, cCam_y, cCam_z, cCam_x1, cCam_y1, cCam_z1 = getCameraMatrix (getLocalPlayer())
 				addEventHandler ("onClientRender", root, main_anim)
 			elseif isCamAnim then
 				removeEventHandler ("onClientRender", root, main_anim)
@@ -52,22 +52,17 @@
 	local x,y = guiGetScreenSize()
 	local login = {
 					window = {
-					 {x/2-256, y/2-128, 512, 256, tocolor (10, 10, 10, 250)}, -- bg white
-						 {x/2-256, y/2-108, 512, 155, tocolor (113, 40, 40, 40)}, -- bg
-							
-					 {x/2-130, y/2-88, 356, 32, tocolor (10, 10, 10, 250)}, -- login
-					{x/2-130, y/2-8, 356,32, tocolor (10, 10, 10, 250)}, -- pass
+					{x/2-256, y/2-256, 512, 512, tocolor (10, 10, 10, 100)}, -- bga
 					
-					{x/2+130, y/2+88, 108,32, tocolor (113, 40, 40, 250)}, -- login
-				--	 {x/2+130, y/2+8, 108,32, tocolor (113, 40, 40, 250)},
+					{x/2-128, y/2-40, 256, 40, tocolor (220, 220, 220, 250)}, -- login
+					{x/2-128, y/2+20, 256,40, tocolor (220, 220, 220, 250)}, -- pass
 					
-					 {x/2-226, y/2-88, 64,64, tocolor (10, 10, 10, 255)},
+					{x/2-128, y/2+88, 256,40, tocolor (113, 40, 40, 250)}, -- login
+					
+					 {x/2-32, y/2-128, 64,64, tocolor (10, 10, 10, 255)},
 					},
 				texts = {
-				{"Account Name ", x/2-120, y/2-83, 356,32, tocolor (150, 150, 150, 250), 1.0, "default-bold"}, -- pass
-				{"Password ", x/2-120, y/2-3, 356,32, tocolor (150, 150, 150, 250), 1.0, "default-bold"}, -- pass
-				{"Login ",x/2+130, y/2+88, 108,32, tocolor (150, 150, 150, 250), 1.0, "default-bold"}, -- pass
-				{"UID : N/A", x/2-226, y/2-12, 356,32, tocolor (150, 150, 150, 250), 1.0, "default-bold"}, -- pass
+
 				}
 	}
 	
@@ -80,3 +75,11 @@
 		end
 	end
 	addEventHandler ("onClientRender", root, dx_drawLoginWindow)
+	
+	function login_cegui()
+		showCursor (true)
+		local log_ = guiCreateEdit (x/2-128, y/2-40, 256, 40, "login", false) 
+		local reg_ = guiCreateEdit (x/2-128, y/2+20, 256, 40, "register", false) 
+	end
+	login_cegui()
+	
